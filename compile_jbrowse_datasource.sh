@@ -61,7 +61,7 @@ create_annotation_tracks(){
 		--gff "${file_name}" \
 		--out "${ORGANISM_DATASOURCE_DIR}"/
 	done
-}cat "${file_name}" | cut -d' ' -f 1 | awk '$0 ~ ">" {if (NR > 1) {print c;} c=0;printf substr($0,2,100) "\t"; } $0 !~ ">" {c+=length($0);} END { print c; }' >> "${CHROM_SIZES_FILE}"
+}
 download_wigToBigWig_tool(){
 	echo "Downloading tool wigToBigWig"
 	wget -P "${BIN_DIR}" \
