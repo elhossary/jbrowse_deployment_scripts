@@ -11,8 +11,8 @@ main(){
 		create_ref_genome_track
 		create_annotation_tracks
 		download_wigToBigWig_tool
-		#convert_wig_to_bigwig
-		#create_bigwig_track
+		convert_wig_to_bigwig
+		create_bigwig_track
 		generate_names
 		#zip_datasource
 	done
@@ -73,7 +73,7 @@ convert_wig_to_bigwig(){
 	echo "converting wig to bigwig for: ${ORGANISM_DATASOURCE_DIR}"
 	for FILES in "${WIGGLE_DIR}"/*.wig
 	do
-		"${BIN_DIR}"/wigToBigWig "$FILES" ./all.chrom.sizes"${BIGWIG_DIR}"/$(basename "$FILES" .wig).bw
+		"${BIN_DIR}"/wigToBigWig "$FILES" "${CHROM_SIZES_FILE}" "${BIGWIG_DIR}"/$(basename "$FILES" .wig).bw
 	done
 }
 create_bigwig_track(){
