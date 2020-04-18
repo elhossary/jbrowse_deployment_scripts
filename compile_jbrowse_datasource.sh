@@ -8,7 +8,8 @@ main(){
 	do
 		set_variables "${organism_DIR}" # DO NOT comment this function call.
 		update_chromosomes_sizes_file
-		create_ref_genome_track
+		create_ref_sequence_track
+		disable_translation
 		create_annotation_tracks
 		download_wigToBigWig_tool
 		convert_wig_to_bigwig
@@ -37,13 +38,16 @@ update_chromosomes_sizes_file(){
 		sort < "${CHROM_SIZES_FILE}" | uniq > "${CHROM_SIZES_FILE}~" && mv "${CHROM_SIZES_FILE}~" "${CHROM_SIZES_FILE}"
 	done
 }
-create_ref_genome_track(){
-	echo "Preparing reference genome track for: ${ORGANISM_DATASOURCE_DIR}"
+create_ref_sequence_track(){
+	echo "Preparing reference sequence track for: ${ORGANISM_DATASOURCE_DIR}"
 	for file_name in "${REFSEQ_DIR}"/*.fa; do
 		"${BIN_DIR}"/prepare-refseqs.pl \
 		--fasta "${file_name}" \
 		--out "${ORGANISM_DATASOURCE_DIR}"/
 	done
+}
+disable_translation{
+	sed -i 's/"type" : "SequenceTrack",/"type" : "SequenceTrack", "showTranslation" : false,/g' "${organism_DIR}/trackList.json"
 }
 create_annotation_tracks(){
 	#remove genes those have more than one part as they cause errors that prevent the whole creation
