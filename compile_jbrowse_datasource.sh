@@ -46,7 +46,7 @@ create_ref_sequence_track(){
 		--out "${ORGANISM_DATASOURCE_DIR}"/
 	done
 }
-disable_translation{
+disable_translation(){
 	sed -i 's/"type" : "SequenceTrack",/"type" : "SequenceTrack", "showTranslation" : false,/g' "${organism_DIR}/trackList.json"
 }
 create_annotation_tracks(){
